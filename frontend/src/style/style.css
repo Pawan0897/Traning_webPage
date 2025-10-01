@@ -1,0 +1,95 @@
+body {
+    background-color: #e7f2ff !important;
+}
+
+*:focus {
+    outline: none !important;
+
+}
+
+:root {
+    --bg: linear-gradient(to right, #071784 0, #1d8fe4 100%) !important;
+    --bg-lightblue: aliceblue;
+}
+
+.bg-blue {
+    background: var(--bg) !important;
+
+}
+
+.bg-lightblue {
+    background-color: var(--bg-lightblue);
+
+}
+
+/* ****************** Banner Style */
+.hero-banner {
+    background: linear-gradient(to right, #071784 0, #1d8fe4 100%);
+    padding: 30px 0;
+    background-size: cover;
+    position: relative;
+    height: 200px;
+
+}
+
+.banner-ccontent {
+    display: inline-block;
+    color: #022a5e;
+    font-size: 35px !important;
+    line-height: 43px !important;
+    font-weight: 600;
+}
+
+/* ****************************** card styling for tech */
+.card {
+
+    width: 100%;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transition: 0.7s ease-in;
+    height: auto;
+
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    z-index: 1;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.card:hover>.card:before {
+    z-index: -1;
+}
+
+.card::after {
+    content: "";
+    position: absolute;
+    background: var(--bg);
+    top: -5px;
+    width: 100%;
+    height: 10px;
+    /* z-index: -1 !important; */
+    border-radius: 10px;
+
+}
+
+/* *********************** Admin */
+.rich-text-input>button {
+    box-shadow: 1px 0px 0px 0px;
+    background-color: #f3f3f3;
+    border-left: 1px solid;
+    border: none;
+    color: #022a5e;
+    border-left: 2px solid #b0b0b0;
+    border-top: 2px solid #b0b0b0;
+    border-bottom: 2px solid #b0b0b0;
+    padding: 8px 15px;
+    font-weight: 800;
+}
+
+.content-item {
+    background-color: #f3f3f3;
+}
+
+.editor_input {
+    height: 400px
+}

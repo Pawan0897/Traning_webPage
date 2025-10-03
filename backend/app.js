@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 /************************************ */
+require("dotenv").config();
 const mongoose = require("mongoose");
 mongoose.set("debug", true)
 /******************.....xxxxxxxxxxxxxxxxxxxx Cors..... */
@@ -11,7 +12,7 @@ const cors = require("cors");
 /***********************.....xxxxxxxxxxxxxxxxxxxxxx */
 const app = express();
 /*********************.....xxxxxxxxxxxxxxxxxxxxxxx create Port ............ */
-const PORT = 4000;
+const PORT = process.env.PORT;
 /*******************.....xxxxxxxxxxxxxxxxxxxxxxxxxxxx API EndPotin  */
 const Course = require("./routes/course.route");
 const { db_connection } = require('./db_connection/db');

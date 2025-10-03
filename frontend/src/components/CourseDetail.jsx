@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+
 import { useNavigate, useParams } from "react-router-dom";
 import { GetDetailOfCourse } from "../../Request/endpoint";
 import { Bold, Clock3, IndianRupee, MapPin } from "lucide-react";

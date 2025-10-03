@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 
 const db_connection = async () => {
-    await mongoose.connect("mongodb://localhost:27017/techlive_training").then(() => {
+    await mongoose.connect(process.env.DB_url).then(() => {
         console.log("Db is Connected !!!!");
 
     }).catch(err => {

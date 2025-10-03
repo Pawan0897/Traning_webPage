@@ -1,17 +1,17 @@
-import { useFormik } from 'formik'
+
 import React from 'react'
 
 export default function Apllication_Form() {
-    const fromik = useFormik({
-        initialValues: {
-            name: "",
-            phone: "",
-            email: "",
-            contacttime: "",
+    // const fromik = useFormik({
+    //     initialValues: {
+    //         name: "",
+    //         phone: "",
+    //         email: "",
+    //         contacttime: "",
 
 
-        }
-    })
+    //     }
+    // })
     return (
         <>
             <div className="course_form bg-light py-4 px-3 rounded shadow">

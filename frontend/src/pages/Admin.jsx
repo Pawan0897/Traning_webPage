@@ -26,49 +26,40 @@ import {
 import { useFormik } from "formik"
 import Modal from "react-bootstrap/Modal";
 import * as yup from "yup"
+import { useMutation } from "@tanstack/react-query";
+import { AddTraningCourse } from "../../Request/endpoint";
+import Swal from "sweetalert2"
 
 /*************************************************************************************************** Export */
 export default function Admin() {
+    const [viewCourse, SetViewCourse] = useState(false);
+
     /******************************************************* Add th instruction on state */
-    const [detail, setDetail] = useState([
-        {
-            month: "",
-            course_instruction: "",
-        },
-    ]);
+    const [detail, setDetail] = useState([]);
+    /******************************* */
     const [month, setMonth] = useState("");
     /************************ Show submit button */
-    const [showSubmitBtn, SetShowSubmit] = useState();
+    // const [showSubmitBtn, SetShowSubmit] = useState(false);
 
     /********************** Modal oprator */
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     /************************ formik yup */
     const formik = useFormik({
         initialValues: {
             courseName: "",
-            courseDetail: [
-                {
-                    month: "",
-                    course_instruction: ""
-                }
-            ],
             coursePrice: "",
             courseDuration: ""
         },
         validationSchema: yup.object({
             courseName: yup.string().required(),
-            courseDetail: yup.array().of(yup.object({
-                month: yup.string().required(),
-                course_instruction: yup.string().required()
-            })),
             coursePrice: yup.string().required(),
             courseDuration: yup.string().required()
 
-        })
+        }),
+        onSubmit: () => { setShow(true), SetViewCourse(false) }
 
     })
 
@@ -78,6 +69,49 @@ export default function Admin() {
         extensions: [StarterKit],
         content: " ",
     });
+
+    /********************* Run the Api query to store the data in db */
+    const SubmitCourse = useMutation({
+        mutationKey: ["adddata"],
+        mutationFn: (body) => AddTraningCourse(body),
+        onSuccess: (res) => {
+            console.log(res?.data?.statuscode, "pkpkpkpkpkpkpkpkpkkpk");
+
+            if (res?.data?.statuscode == 200) {
+                formik?.resetForm()
+                setDetail([])
+                SetViewCourse(false)
+                /******************** alert....... */
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                /******************** alert 2...... */
+                Toast.fire({
+                    icon: "success",
+                    title: res?.data?.message
+                });
+
+            }
+            else {
+                Swal.fire({
+                    title: res?.data?.message,
+                    text: "Something was wrong",
+                    icon: "info"
+
+                })
+            }
+
+        }
+    })
+
 
     /**************************** */
     if (!editor) return null;
@@ -89,7 +123,7 @@ export default function Admin() {
         }
     };
     /**************************** */
-    console.log(editor, "............");
+    // console.log(editor, "............");
     /**************************** */
     const EditChain = (key) => {
         switch (key) {
@@ -136,40 +170,52 @@ export default function Admin() {
     };
     /************************************* Modal course detail functions */
     const AddCourseDetail = () => {
-        setDetail([
-            ...detail,
-            {
-                month: month,
-                course_instruction: editor.getText(),
-            },
-        ]);
-        console.log(detail, "i m pawan");
-        setShow(false);
+        if (month == "" || editor.getHTML() == "") {
+            alert("Please fill the all field")
+        }
+        else {
+            setDetail([
+                ...detail,
+                {
+                    month: month,
+                    course_instruction: editor.getHTML(),
+                },
+            ]);
+            // console.log(detail, "i m pawan");
+            /**************** close the modal of add detail */
+            setShow(false);
+            /**************** after adding the month is khali */
+            setMonth("")
+            /**************** clear the introducton input after cliked */
+            editor.commands.clearContent()
+            /**************** show submit buttom */
+
+            /************* view the addedd conednt */
+            SetViewCourse(true)
+        }
+
     };
-    console.log(detail, "pk");
-    /********************************************** formik & yup */
 
 
     return (
         <>
-            {detail?.map((item) => {
-                return (
-                    <>
-                        <p>month ========= {item?.month}</p>
-                        <p>{item?.course_instruction}</p>
-                    </>
-                );
-            })}
+
             <div className="container">
+
+
+                <h1 className="text-center fw-bold mt-3"> Add Course</h1>
+
                 {/* .......................................................................................................... */}
                 <div className="row  justify-content-center align-items-center mt-5">
                     <div className="col-md-10">
+
+                        {/* ********************************************************** */}
                         <div className="admin-box bg-light p-4 shadow rounded">
                             <div className="admin-form">
                                 <div className="row">
                                     {/* ************************ */}
                                     <div className="col-md-6">
-                                        <div class="mb-3">
+                                        <div class="">
                                             <label
                                                 for="exampleFormControlInput1"
                                                 className="form-label mt-1 fw-semibold "
@@ -177,15 +223,19 @@ export default function Admin() {
                                                 Course Name <strong className="text-danger">*</strong>
                                             </label>
                                             <input
-                                                type="email"
+                                                type="text"
+                                                onChange={formik?.handleChange}
+                                                value={formik?.values?.courseName}
+                                                name={"courseName"}
                                                 className="form-control py-2 px-2"
                                                 id="exampleFormControlInput1"
                                             />
                                         </div>
+                                        {formik?.errors?.courseName && (<p className="text-danger text-capitalize">{formik?.errors?.courseName} <strong className="fx-bold text-danger">*</strong></p>)}
                                     </div>
                                     {/* ************************ */}
                                     <div className="col-md-3">
-                                        <div class="mb-3">
+                                        <div class="">
                                             <label
                                                 for="exampleFormControlInput1"
                                                 className="form-label mt-1 fw-semibold "
@@ -193,16 +243,20 @@ export default function Admin() {
                                                 Course Price <strong className="text-danger">*</strong>
                                             </label>
                                             <input
-                                                type="email"
+                                                type="text"
+                                                onChange={formik?.handleChange}
+                                                value={formik?.values?.coursePrice}
+                                                name={"coursePrice"}
                                                 className="form-control py-2 px-2"
                                                 id="exampleFormControlInput1"
                                             />
                                         </div>
+                                        {formik?.errors?.coursePrice && (<p className="text-danger text-capitalize">{formik?.errors?.coursePrice} <strong className="fx-bold text-danger">*</strong></p>)}
                                     </div>
                                     {/* ************************ */}
                                     {/* ************************ */}
                                     <div className="col-md-3">
-                                        <div class="mb-3">
+                                        <div class="">
                                             <label
                                                 for="exampleFormControlInput1"
                                                 className="form-label mt-1 fw-semibold "
@@ -211,45 +265,30 @@ export default function Admin() {
                                                 <strong className="text-danger">*</strong>
                                             </label>
                                             <input
-                                                type="email"
-                                                className="form-control py-2 px-2"
+                                                name={"courseDuration"}
+                                                value={formik?.values?.courseDuration}
+                                                onChange={formik?.handleChange}
+                                                type="text"
+                                                className="form-control py-2 mb-0 px-2"
                                                 id="exampleFormControlInput1"
                                             />
                                         </div>
+                                        {formik?.errors?.courseDuration && (<p className="text-danger text-capitalize">{formik?.errors?.courseDuration} <strong className="fx-bold text-danger">*</strong></p>)}
                                     </div>
                                     {/* ************************ ........................*/}
-                                    {/* ************************ */}
-                                    <div className="col-md-12">
-                                        <div class="mb-3">
-                                            <label
-                                                for="exampleFormControlInput1"
-                                                className="form-label mt-1 fw-semibold "
-                                            >
-                                                Month Title <strong className="text-danger">*</strong>
-                                            </label>
-                                            <input
-                                                type="email"
-                                                className="form-control py-2 px-2"
-                                                id="exampleFormControlInput1"
-                                            />
-                                        </div>
-                                    </div>
 
                                     {/* *************************** button */}
                                     <div className="submit-btn ">
-                                        <button
-                                            type="button"
-                                            className="py-2 d-flex m-auto mt-2 px-3 bg-blue border-0 btn text-light fw-semibold"
-                                        >
-                                            Submit
-                                        </button>
+
                                         <button
                                             variant="primary"
-                                            className="py-2 d-flex m-auto mt-2 px-3 bg-blue border-0 btn text-light fw-semibold"
-                                            onClick={handleShow}
+                                            type="button"
+                                            className="py-2 d-flex m-auto mt-4 px-3 bg-danger border-0 btn text-light fw-semibold"
+                                            onClick={() => formik?.handleSubmit()}
                                         >
-                                            Add Course Detail
+                                            Add Course Detail +
                                         </button>
+
                                     </div>
 
                                     {/* ........................................... */}
@@ -286,7 +325,7 @@ export default function Admin() {
                                         Month Title <strong className="text-danger">*</strong>
                                     </label>
                                     <input
-                                        type="email"
+                                        type="text"
                                         className="form-control py-2 px-2"
                                         id="exampleFormControlInput1"
                                         onChange={(e) => setMonth(e.target.value)}
@@ -365,10 +404,13 @@ export default function Admin() {
                                         </button>
                                     </div>
                                     {/* ******************************* Input */}
-                                    <EditorContent
-                                        editor={editor}
-                                        className="bg-light py-3 px-3 rounded editor_input"
-                                    />
+                                    <div className="editor_wrap">
+                                        <EditorContent
+                                            editor={editor}
+                                            className="bg-light py-3 px-3 rounded editor_input"
+
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -390,6 +432,92 @@ export default function Admin() {
                 </Modal.Footer>
             </Modal>
             {/* ***************************** end */}
+
+
+
+            {/* ********************************************************** Modal to the The course for view */}
+            <Modal
+                show={viewCourse}
+                onHide={() => SetViewCourse(false)}
+                backdrop="static"
+                size="lg"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>
+                        View Course <strong className="text-danger"> *</strong>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="container-fluid">
+                        <div className="row">
+                            {/* ************************ ........................*/}
+                            <div className="col-md-12">
+                                <div className="table table-bordered    ">
+                                    <table className="table border text-center table-bordered">
+                                        <thead>
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th>Duration</th>
+
+                                        </thead>
+                                        <tbody>
+                                            <td>{formik?.values?.courseName}</td>
+                                            <td>{formik?.values?.coursePrice}</td>
+                                            <td>{formik?.values?.courseDuration}</td>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                                <div className="detail-course">
+                                    {
+                                        detail?.map((item) => {
+                                            return (
+                                                <>
+
+                                                    <p><strong>Month:</strong>{item?.month}</p>
+                                                    <p><strong>Course Instruction:</strong>{item?.course_instruction}</p>
+
+                                                </>
+                                            )
+                                        })
+                                    }
+                                </div>
+                                {/* /******* Add more detail if you want */}
+                                <div className="addmore_detail">
+                                    <button className="bg-danger text-light fw-semibold border-0 btn " onClick={() => formik?.handleSubmit()}>Add More Details + </button>
+                                </div>
+                            </div>
+                            {/* ***************************************8 */}
+
+                        </div>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button
+                        className="bg-danger btn text-light fw-semibold border-0 rounded"
+                        onClick={() => SetViewCourse(false)}
+                    >
+                        Close
+                    </button>
+                    <button
+                        className="bg-success btn text-light fw-semibold border-0 rounded"
+                        onClick={() => {
+                            const body = {
+                                courseName: formik?.values?.courseName,
+                                coursePrice: formik?.values?.coursePrice,
+                                courseDuration: formik?.values?.courseDuration,
+                                courseDetail: detail
+                            }
+                            SubmitCourse.mutate(body)
+                            SetViewCourse(false)
+                        }}
+                    >
+                        Submit
+                    </button>
+                </Modal.Footer>
+            </Modal>
+
         </>
     );
 }

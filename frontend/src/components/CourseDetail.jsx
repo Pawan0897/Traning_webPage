@@ -1,141 +1,106 @@
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { GetDetailOfCourse } from "../../Request/endpoint";
+import { Bold, Clock3, IndianRupee, MapPin } from "lucide-react";
+import Apllication_Form from "./Apllication_Form";
 
 export default function CourseDetail() {
-    const [state, setstate] = useState([
-        {
-            pk: "pk"
+    const navigate = useNavigate()
+    // console.log(state.map((item) => item));
+    const { id } = useParams();
+    // console.log(id, "pppppppppppppppppppppppppppppppppppppppooooooooooooooooooooooooooooooooooo");
+
+    /********************************Api Queries start .... */
+    const { data } = useQuery({
+        queryKey: ["getcourseDetail"],
+        queryFn: async () => {
+            const res = await GetDetailOfCourse(id)
+            return res.data
         }
-    ])
-    console.log(state.map((item) => item));
+    })
+
 
     return (
         <>
-            <section className="hero-banner d-flex justify-content-center bg-blue align-items-center">
+            <section className="hero-banner d-flex  bg-blue align-items-center">
                 {/* /*************** Banner Section --xxxxxxxxxx */}
                 <div className="banner-overlay"></div>
-                <div className="banner-content ">
-                    <h1 className="text-light fw-bold">
-                        React Js Development [3 Months] { }
-                    </h1>
+                <div className="banner-content  detail_banner">
+                    <h2 className="text-light fw-semibold ms-5">{data?.data?.courseName} [{data?.data?.courseDuration}] </h2>
+                    <h6 className="text-light fw-semibold ms-5 mt-4 d-flex"><p className="text-grey fw-semibold me-1 " onClick={() => navigate("/")}>Home </p> / Traning</h6>
                 </div>
             </section>
             {/* **************************** Detail xxxxxxxxxxxxxxxxxxxx */}
-            <section>
-                <div className=" mt-4 container">
+            <section className="mb-5">
+                <div className=" mt-4 container ">
                     <div className="row">
-                        <div className="col-md-8 ">
-                            <div className="course_detail bg-light shadow rounded p-3 w-100 ">
+                        <div className="col-md-7 col-lg-8 col-sm-12 col-xs-12">
+                            <div className="course_detail bg-light shadow rounded py-3 px-4 w-100 ">
                                 {/* ************** Detail-headre */}
-                                <div className="detail_header d-flex gap-4">
-                                    <button className="border-0 bg-blue rounded-5 py-2 px-3 text-light fw-semibold" onClick={() => setstate([...state, { pk: "lop" }])}>
+                                <ul className="detail_header d-flex gap-2 flex-wrap ">
+                                    <li className=" bg-blue rounded-5  d-flex fw-semibold   align-items-center text-light ">
                                         {" "}
-                                        location - Mohali
-                                    </button>
+                                        <a className="mb-0 ms-1 text-light">
+                                            <i>
+
+                                                <MapPin size={16} className="text-light fw-semibold" />
+                                            </i>
+                                            Location - Mohali
+                                        </a>
+                                    </li>
                                     {/* xxxxxxxxxxxxxxx */}
-                                    <button className="border-0 bg-blue rounded-5 py-2 px-3 text-light fw-semibold">
-                                        duration - 3 months
-                                    </button>
+                                    <li className="bg-blue rounded-5  d-flex   align-items-center text-light ">
+
+
+                                        <a className="mb-0 ms-1 text-light">
+                                            <i>
+                                                <Clock3 size={16} className="text-light fw-semibold" />
+                                            </i>  Duration - {data?.data?.courseDuration}
+                                        </a>
+
+                                    </li>
                                     {/* xxxxxxxxxxxxxxx */}
-                                    <button className="border-0 bg-blue rounded-5 py-2 px-3 text-light fw-semibold">
-                                        fee: ₹990.00
-                                    </button>
+                                    <li className="bg-blue rounded-5  d-flex   align-items-center text-light ">
+
+                                        <a className="mb-0 ms-1 text-light">
+                                            <i>
+                                                <IndianRupee size={15} className="text-light fw-bold" fontWeight="bold" />
+                                            </i>fee: {data?.data?.coursePrice}.00
+                                        </a>
+
+                                    </li>
                                     {/* xxxxxxxxxxxxxxx */}
-                                </div>
+                                </ul>
                                 {/* *end the box of detail header ******** */}
                                 <div className="detail_box">
-                                    <h6 className="fw-bold">Syllabus :</h6>
-                                    <div className="title">
-                                        <h2>Month 1</h2>
-                                    </div>
-                                    <div className="instruction">
-                                        <p>
+                                    <h6 className="fw-bold mt-4 mb-3"> Traning Syllabus :</h6>
+                                    {
+                                        data?.data?.courseDetail?.map((item) => {
+                                            return (
+                                                <>
+                                                    <div className="title">
+                                                        <h3 className="text-bg fw-semibold">{item?.month}</h3>
+                                                    </div>
+                                                    <div className="instruction">
+                                                        <div dangerouslySetInnerHTML={{ __html: item?.course_instruction }}></div>
+                                                        {/* <p>
+                                                            {item?.course_instruction}
 
-                                        </p>
-                                    </div>
+                                                        </p> */}
+                                                    </div>
+                                                </>
+                                            )
+
+                                        })
+                                    }
+
                                 </div>
                             </div>
                         </div>
                         {/* ******* Form xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx */}
-                        <div className="col-md-4">
-                            <div className="course_form bg-light py-4 px-3 rounded shadow">
-                                <div className="form ">
-                                    <h2 className="fw-bold text-center mb-3">Application Form</h2>
-                                    <div class="mb-3">
-                                        <label
-                                            for="exampleFormControlInput1"
-                                            className="form-label mt-1 fw-semibold "
-                                        >
-                                            Name <strong className="text-danger">*</strong>
-                                        </label>
-                                        <input
-                                            type="email"
-                                            className="form-control py-2 px-2"
-                                            id="exampleFormControlInput1"
-                                        />
-                                    </div>
-                                    {/* ************** */}
-                                    <div class="mb-3">
-                                        <label
-                                            for="exampleFormControlInput1"
-                                            className="form-label mt-1 fw-semibold "
-                                        >
-                                            Email <strong className="text-danger">*</strong>{" "}
-                                        </label>
-                                        <input
-                                            type="email"
-                                            className="form-control py-2 px-2"
-                                            id="exampleFormControlInput1"
-                                        />
-                                    </div>
-                                    {/* ****************** */}
-                                    {/* ************** */}
-                                    <div class="mb-3">
-                                        <label
-                                            for="exampleFormControlInput1"
-                                            className="form-label mt-1 fw-semibold "
-                                        >
-                                            Contact No. <strong className="text-danger">*</strong>
-                                        </label>
-                                        <input
-                                            type="email"
-                                            className="form-control py-2 px-2"
-                                            id="exampleFormControlInput1"
-                                        />
-                                    </div>
-                                    {/* ************** */}
-                                    <div class="mb-3">
-                                        <label
-                                            for="exampleFormControlInput1"
-                                            className="form-label mt-1 fw-semibold "
-                                        >
-                                            Contact Time <strong className="text-danger">*</strong>
-                                        </label>
-                                        <input
-                                            type="email"
-                                            className="form-control py-2 px-2"
-                                            id="exampleFormControlInput1"
-                                        />
-                                    </div>
-                                    {/* ************** */}
-                                    <div class="mb-3">
-                                        <label
-                                            for="exampleFormControlInput1"
-                                            className="form-label mt-1 fw-semibold "
-                                        >
-                                            Resume <strong className="text-danger">*</strong>
-                                        </label>
-                                        <input
-                                            type="email"
-                                            className="form-control py-2 px-2"
-                                            id="exampleFormControlInput1"
-                                        />
-                                    </div>
-                                    {/* *************** Apply */}
-                                    <button className="rounded py-2 px-3 bg-blue text-light fw-semibold border-0 d-flex m-auto">
-                                        Apply
-                                    </button>
-                                </div>
-                            </div>
+                        <div className="col-md-5 col-lg-4 col-sm-12 col-xs-12">
+                            <Apllication_Form />
                         </div>
                     </div>
                 </div>

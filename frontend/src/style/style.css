@@ -1,5 +1,5 @@
 body {
-    background-color: #e7f2ff !important;
+    background-color: #f5f7fa !important;
 }
 
 *:focus {
@@ -7,9 +7,15 @@ body {
 
 }
 
+p {
+    color: #555;
+    font-family: 'Poppins', sans-serif;
+}
+
 :root {
     --bg: linear-gradient(to right, #071784 0, #1d8fe4 100%) !important;
     --bg-lightblue: aliceblue;
+    --cl-blue: #071784 !important;
 }
 
 .bg-blue {
@@ -22,6 +28,20 @@ body {
 
 }
 
+.text-bg {
+    color: #071784 !important;
+}
+
+.text-grey {
+    color: #eeeeeebf;
+}
+
+h1 {
+    font-family: "'Bebas Neue', sans-serif";
+    font-size: "48px";
+    color: "#fff";
+}
+
 /* ****************** Banner Style */
 .hero-banner {
     background: linear-gradient(to right, #071784 0, #1d8fe4 100%);
@@ -32,12 +52,42 @@ body {
 
 }
 
-.banner-ccontent {
-    display: inline-block;
-    color: #022a5e;
-    font-size: 35px !important;
-    line-height: 43px !important;
+
+
+.banner-content>h2 {
+    font-size: 40px;
+    line-height: 40px;
     font-weight: 600;
+    position: relative;
+}
+
+.banner-content>h2:before {
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 2px;
+    background: #fff;
+    left: 0;
+    right: 0;
+    bottom: -12px;
+    margin: 0 auto;
+}
+
+.banner-content>h2:after {
+    content: "";
+    position: absolute;
+    width: 20%;
+    height: 2px;
+    background: #8bc34a;
+    left: 0;
+    right: 0;
+    bottom: -12px;
+    margin: 0 auto;
+}
+
+.banner-content>h6 {
+    margin-top: 20px;
+    font-size: 17px;
 }
 
 /* ****************************** card styling for tech */
@@ -45,7 +95,7 @@ body {
 
     width: 100%;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    transition: 0.7s ease-in;
+    transition: 0.6s ease-in;
     height: auto;
 
 }
@@ -91,5 +141,340 @@ body {
 }
 
 .editor_input {
-    height: 400px
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+
+
+/***************** Search  */
+.filter-item {
+    background-color: #fff;
+    margin-bottom: 19px;
+    padding: 22px 11px 22px 22px;
+    box-shadow: 0 0 7px #022a5e1c !important;
+    border-radius: 6px
+}
+
+.search-button>button {
+    font-size: 18px !important;
+    padding: 0 24px;
+    display: inline-block;
+    font-weight: 600;
+    line-height: 45px;
+    height: 45px;
+    background: #fff;
+    width: 100%;
+    text-transform: capitalize;
+    border: 1px solid #fff;
+    color: #004caf;
+    border-radius: 5px;
+}
+
+.search-input>input {
+    background-color: #f5f5f5;
+    width: 100%;
+}
+
+/********************** details of traning  */
+.instruction>div>ul>li>p {
+    font-weight: 600;
+    line-break: 7px;
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 15px;
+
+    margin: 0px 0 !important;
+}
+
+.instruction>div>ul>li>ul>li>p {
+    margin: 8px 0 !important;
+}
+
+.detail_box>.title>.h3 {
+    font-family: 'Poppins', sans-serif;
+}
+
+.price-det {
+    font-size: 14px;
+    font-weight: 600;
+
+}
+
+.course_detail>ul {
+    padding: 0;
+}
+
+.course_detail>ul>li>a {
+    font-size: 15px;
+    padding: 7px 13px;
+    font-weight: 500;
+    width: 100%;
+    display: inline-block;
+    border-radius: 27px;
+    color: #fff !important;
+    font-weight: 500px;
+    text-decoration: none;
+    letter-spacing: 0.4px;
+}
+
+/* ******************************************************* Responsive PAge */
+/* *********************** 1024 ************** */
+@media (max-width:1024px) AND (min-width:992px) {
+    .price-det {
+        font-size: 13px;
+        font-weight: 600;
+
+    }
+
+    .detail_header>li {
+        font-size: 15px;
+    }
+}
+
+/* ***************** 425 xxxxxxxxxxxxxxxxx */
+
+@media (max-width:769px) {
+    .search-input {
+        margin-bottom: 13px;
+    }
+
+    .detail_header {
+        gap: inherit !important;
+        padding: 0;
+    }
+
+    .detail_header>p {
+        font-size: 15px;
+        padding: 8px 9px !important;
+        margin-left: 0px;
+    }
+
+    .detail_header>p>p {
+        font-size: 10px;
+
+    }
+
+    .detail_box>.title>h3 {
+        font-size: 22px;
+        ;
+    }
+
+    .instruction>div>ul>li>ul>li>p {
+        margin: 7px 0 !important;
+        font-size: 14px;
+    }
+
+    .instruction>div>ul>li>p {
+        font-size: 14px;
+    }
+
+    .detail_banner>h2 {
+        font-size: 30px;
+        line-height: 30px;
+    }
+
+    .course_detail>ul>li {
+        margin-bottom: 10px;
+        margin-left: 2px;
+
+    }
+
+
+}
+
+/************************** 425 and 375 */
+@media (max-width:426px) AND (min-width:377px) {
+    .hero-banner {
+        padding-left: 30px !important
+    }
+
+    .course_form {
+        margin-top: 25px;
+        margin-bottom: 50px;
+    }
+
+    .banner-content>h2 {
+        font-size: 33px;
+        margin: 0px !important
+    }
+
+    .banner-content>h6 {
+        margin-top: 16px;
+        margin-left: 0px !important;
+    }
+
+    .detail_banner>h2 {
+        font-size: 25px;
+        line-height: 20px;
+    }
+
+    .detail_banner>h6 {
+        margin-top: 20px;
+        font-size: 15px;
+    }
+}
+
+/* *************************** 374 */
+@media (max-width:376px) AND (min-width:321px) {
+    .banner-content>h2 {
+        font-size: 30px;
+        line-height: 30px;
+    }
+
+    .hero-banner {
+        padding-left: 0px !important;
+    }
+}
+
+/* /******************************** 320 px  */
+@media (max-width:320px) {
+    .banner-content>h2 {
+        font-size: 26px;
+        line-height: 25px;
+        margin-left: 10px !important;
+    }
+
+    .banner-content>h6 {
+        margin-left: 20px !important;
+        font-size: 17px;
+
+    }
+
+    .hero-banner {
+        padding-left: 0px !important;
+    }
+}
+
+
+/* **************************  button *************** */
+
+.del {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 140px;
+    height: 44px;
+    text-align: center;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.del div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, .5),
+        -4px -4px 6px 0 rgba(116, 125, 136, .5),
+        inset -4px -4px 6px 0 rgba(255, 255, 255, .2),
+        inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg);
+    border-radius: 30px;
+    letter-spacing: 1px;
+    color: var(--cl-blue);
+    color: #ffff;
+    font-weight: 500;
+    z-index: 1;
+    transition: .6s;
+}
+
+.del:hover div {
+    letter-spacing: 4px;
+    color: #fff;
+    background: var(--bg);
+}
+
+/* /////////////// */
+
+.btn-edit {
+    position: relative;
+    margin: auto;
+    padding: 9px 12px;
+    outline: none;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    background: var(--bg);
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 500;
+    width: 40%;
+    height: 40px;
+    font-size: 15px;
+    font-family: inherit;
+    z-index: 0;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+}
+
+.btn-edit:hover {
+    animation: sh0 0.5s ease-in-out both;
+}
+
+@keyframes sh0 {
+    0% {
+        transform: rotate(0deg) translate3d(0, 0, 0);
+    }
+
+    25% {
+        transform: rotate(7deg) translate3d(0, 0, 0);
+    }
+
+    50% {
+        transform: rotate(-7deg) translate3d(0, 0, 0);
+    }
+
+    75% {
+        transform: rotate(1deg) translate3d(0, 0, 0);
+    }
+
+    100% {
+        transform: rotate(0deg) translate3d(0, 0, 0);
+    }
+}
+
+.btn-edit:hover span {
+    animation: storm 0.7s ease-in-out both;
+    animation-delay: 0.06s;
+}
+
+.btn-edit::before,
+.btn-edit::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #fff;
+    opacity: 0;
+    transition: transform 0.15s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.15s cubic-bezier(0.02, 0.01, 0.47, 1);
+    z-index: -1;
+    transform: translate(100%, -25%) translate3d(0, 0, 0);
+}
+
+.btn-edit:hover::before,
+.btn-edit:hover::after {
+    opacity: 0.15;
+    transition: transform 0.2s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+}
+
+.btn-edit:hover::before {
+    transform: translate3d(50%, 0, 0) scale(0.9);
+}
+
+.btn-edit:hover::after {
+    transform: translate(50%, 0) scale(1.1);
 }

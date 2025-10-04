@@ -3,7 +3,6 @@ import { Link } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { GetTraningCourse } from "../../Request/endpoint";
 import { convert } from "html-to-text";
-import Loader from "../loader/Loader";
 export default function Traning() {
     const [inputValue, setInputVlaue] = useState("");
     const [search, setSearch] = useState(inputValue);

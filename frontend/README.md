@@ -1,6 +1,6 @@
 # Course with Admin Panel (MERN)
 
-A full-stack MERN application\*\* that allows admins to create and manage courses with details like duration, price, and month-wise instructions.
+A full-stack MERN application that allows admins to create and manage courses with details like duration, price, and month-wise instructions.
 
 ---
 
@@ -11,7 +11,7 @@ A full-stack MERN application\*\* that allows admins to create and manage course
 - MongoDB for persistent storage
 - Responsive UI built with Bootstrap & React-Bootstrap
 - RESTful API with Express.js
-- Form validation with Formik + Yup
+- Form validation using Formik + Yup
 - Rich-text course description editor using TipTap
 - Notifications with SweetAlert2
 - Routing handled by React Router DOM
@@ -23,7 +23,7 @@ A full-stack MERN application\*\* that allows admins to create and manage course
 ### Frontend
 
 - React.js
-- React-Bootstrap / Bootstrap
+- React-Bootstrap and Bootstrap
 - TanStack (React Query)
 - Formik + Yup (form handling & validation)
 - HTML-to-Text
@@ -43,8 +43,6 @@ A full-stack MERN application\*\* that allows admins to create and manage course
 - nodemon (dev server)
 
 ---
-
-## Run Locally
 
 -- Clone the Repository
 

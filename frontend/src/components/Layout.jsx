@@ -16,6 +16,7 @@ export default function Layout() {
     });
     return (
         <Routes>
+            {/* **************************  Loader....... */}
             <Route
                 path="/"
                 element={
@@ -35,7 +36,9 @@ export default function Layout() {
                     </Suspense>
                 }
             />
+            {/* ***************************** */}
             <Route path="/course_detail/:id" element={<CourseDetail />} />
+            {/* ***************************** */}
             <Route path="/admin" element={<Admin />} />
         </Routes>
     );

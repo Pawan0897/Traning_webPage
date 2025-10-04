@@ -47,11 +47,21 @@ const AddCourse = async (req, res) => {
 const GetCourse = async (req, res) => {
 
     let CourseData = [];
+    let search = {};
     /***********************  for searching the taining course  ******* */
     try {
-        if (req.query.name) {
-            const searchData = { courseName: { $regex: new RegExp(req.query.name, "i") } }
-            CourseData = await COURSE.find(searchData)
+        if (req.query.search) {
+            // const searchData = { courseName: { $regex: new RegExp(req.query.name, "i") } }
+            const searchData = { $regex: new RegExp(req.query.search, "i") }
+            search = {
+                $or: [
+                    { courseName: searchData },
+                    { coursePrice: searchData },
+                    { courseDuration: searchData }
+                ]
+
+            }
+            CourseData = await COURSE.find(search)
         }
         else {
             CourseData = await COURSE.find();

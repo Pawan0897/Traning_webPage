@@ -5,7 +5,7 @@ export const AddTraningCourse = async (body) => {
 }
 /*********************** Fetch the course ...... */
 export const GetTraningCourse = async (body) => {
-    return await http.get(`/course/getcourse?name=${body}`)
+    return await http.get(`/course/getcourse?search=${body}`)
 }
 
 // ***************************** fetch detail
